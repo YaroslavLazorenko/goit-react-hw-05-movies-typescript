@@ -1,0 +1,19 @@
+.movie-info {
+  display: flex;
+  flex-direction: row;
+  padding: 2px 0 10px 2px;
+}
+
+.movie-info-description {
+  padding: 10px;
+}
+
+.text {
+  margin-bottom: 15px;
+}
+
+.additional-info-container {
+  padding: 10px 2px;
+  border-top: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+}

@@ -1,0 +1,20 @@
+.nav-container {
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  border-bottom: 1px solid #aaa;
+  box-shadow: 0px 3px 3px 1px #bbb;
+}
+
+:global(.nav-link) {
+  color: black;
+  text-decoration: none;
+}
+
+:global(.nav-link:not(:last-child)) {
+  margin-right: 10px;
+}
+
+:global(.nav-link.activated) {
+  color: tomato;
+}

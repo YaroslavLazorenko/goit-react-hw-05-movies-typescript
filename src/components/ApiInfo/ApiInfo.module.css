@@ -1,0 +1,16 @@
+.container {
+  padding-top: 15px;
+  padding-left: 20px;
+  border-top: 1px solid #aaa;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.text {
+  display: inline-block;
+  margin-right: 10px;
+}
