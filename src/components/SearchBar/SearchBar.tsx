@@ -1,17 +1,16 @@
-import { PropTypes } from 'prop-types';
-import { useState } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function Searchbar({ onSubmitSearchQuery }) {
-  const [query, setQuery] = useState('');
+export default function SearchBar({ onSubmitSearchQuery }) {
+  const [query, setQuery] = useState<string>('');
 
-  const onChange = e => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target;
     setQuery(value);
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e: FormEvent): void => {
     e.preventDefault();
 
     if (query.trim()) {
@@ -22,7 +21,7 @@ export default function Searchbar({ onSubmitSearchQuery }) {
     toast('Please, enter your request in search field', { toastId: 'Searchbar-toast' });
   };
 
-  const resetForm = () => {
+  const resetForm = (): void => {
     setQuery('');
   };
 
@@ -44,4 +43,4 @@ export default function Searchbar({ onSubmitSearchQuery }) {
   );
 }
 
-Searchbar.propTypes = { onSubmitSearchQuery: PropTypes.func.isRequired };
+SearchBar.propTypes = { onSubmitSearchQuery: PropTypes.func.isRequired };
