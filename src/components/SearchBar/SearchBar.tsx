@@ -2,7 +2,11 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function SearchBar({ onSubmitSearchQuery }) {
+interface SearchBarProps {
+  onSubmitSearchQuery: (searchQuery: string) => void;
+}
+
+export default function SearchBar({ onSubmitSearchQuery }: SearchBarProps) {
   const [query, setQuery] = useState<string>('');
 
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -42,5 +46,3 @@ export default function SearchBar({ onSubmitSearchQuery }) {
     </form>
   );
 }
-
-SearchBar.propTypes = { onSubmitSearchQuery: PropTypes.func.isRequired };

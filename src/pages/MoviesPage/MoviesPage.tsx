@@ -6,13 +6,15 @@ import FetchMovies from '../../services/themoviedb-api';
 import { Status } from '../../consts';
 import Styles from './MoviesPage.module.css';
 
+import type { MoviesByQuery } from 'types';
+
 const fetchMovies = new FetchMovies();
 
 export default function MoviesPage() {
-  const [status, setStatus] = useState(Status.IDLE);
-  const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [moviesByQuery, setMoviesByQuery] = useState([]);
+  const [status, setStatus] = useState<string>(Status.IDLE);
+  const [error, setError] = useState<Error | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [moviesByQuery, setMoviesByQuery] = useState<MoviesByQuery[]>([]);
   let navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
@@ -27,12 +29,12 @@ export default function MoviesPage() {
     }
   }, [searchParameter]);
 
-  const handleSubmitSearchQuery = searchQuery => {
+  const handleSubmitSearchQuery = (searchQuery: string): void => {
     setSearchQuery(searchQuery);
     navigate(`?query=${searchQuery}`);
   };
 
-  const isFirstRender = useRef(true);
+  const isFirstRender = useRef<boolean>(true);
 
   useEffect(() => {
     if (isFirstRender.current) {
