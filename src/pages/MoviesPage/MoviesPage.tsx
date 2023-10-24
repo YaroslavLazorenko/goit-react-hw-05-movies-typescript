@@ -7,12 +7,13 @@ import { Status } from '../../consts';
 import Styles from './MoviesPage.module.css';
 
 import type { MoviesByQuery } from 'types';
+import { AxiosError } from 'axios';
 
 const fetchMovies = new FetchMovies();
 
 export default function MoviesPage() {
   const [status, setStatus] = useState<string>(Status.IDLE);
-  const [error, setError] = useState<Error | null>(null);
+  const [error, setError] = useState<AxiosError | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [moviesByQuery, setMoviesByQuery] = useState<MoviesByQuery[]>([]);
   let navigate = useNavigate();
@@ -63,7 +64,7 @@ export default function MoviesPage() {
   }
 
   if (status === Status.REJECTED) {
-    return <p>Error fetching data: {error.message}</p>;
+    return <p>Error fetching data: {error && error.message}</p>;
   }
 
   if (status === Status.RESOLVED || status === Status.IDLE) {
