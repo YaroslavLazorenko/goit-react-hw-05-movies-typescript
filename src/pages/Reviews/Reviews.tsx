@@ -4,15 +4,18 @@ import Loader from 'react-loader-spinner';
 import FetchMovies from '../../services/themoviedb-api';
 import { Status } from '../../consts';
 import Styles from './Reviews.module.css';
+import { AxiosError } from 'axios';
+
+import { Review } from 'types';
 
 const fetchMovies = new FetchMovies();
 
 export default function Reviews() {
-  const [status, setStatus] = useState(Status.PENDING);
-  const [error, setError] = useState(null);
-  const movieId = useOutletContext();
+  const [status, setStatus] = useState<string>(Status.PENDING);
+  const [error, setError] = useState<AxiosError | null>(null);
+  const movieId = useOutletContext<string>();
 
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
   useEffect(() => {
     fetchMovies
       .getReviews(movieId)
@@ -35,7 +38,7 @@ export default function Reviews() {
   }
 
   if (status === Status.REJECTED) {
-    return <p>Error fetching data: {error.message}</p>;
+    return <p>Error fetching data: {error && error.message}</p>;
   }
 
   if (status === Status.RESOLVED) {

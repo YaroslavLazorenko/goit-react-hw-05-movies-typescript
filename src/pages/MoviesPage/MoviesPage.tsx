@@ -5,9 +5,9 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import FetchMovies from '../../services/themoviedb-api';
 import { Status } from '../../consts';
 import Styles from './MoviesPage.module.css';
-
-import type { MoviesByQuery } from 'types';
 import { AxiosError } from 'axios';
+
+import type { MovieByQuery } from 'types';
 
 const fetchMovies = new FetchMovies();
 
@@ -15,7 +15,7 @@ export default function MoviesPage() {
   const [status, setStatus] = useState<string>(Status.IDLE);
   const [error, setError] = useState<AxiosError | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [moviesByQuery, setMoviesByQuery] = useState<MoviesByQuery[]>([]);
+  const [moviesByQuery, setMoviesByQuery] = useState<MovieByQuery[]>([]);
   let navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
