@@ -38,7 +38,7 @@ export default function Reviews() {
   }
 
   if (status === Status.REJECTED) {
-    return <p>Error fetching data: {error && error.message}</p>;
+    return <p>Error fetching data: {error?.message}</p>;
   }
 
   if (status === Status.RESOLVED) {

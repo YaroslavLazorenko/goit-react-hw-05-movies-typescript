@@ -5,13 +5,16 @@ import { ROUTES, Status } from '../../consts';
 import FetchMovies from '../../services/themoviedb-api';
 import GoBackButton from '../../components/GoBackButton';
 import Styles from './MovieDetailsPage.module.css';
+import { AxiosError } from 'axios';
+
+import type { MovieDetails } from 'types';
 
 const fetchMovies = new FetchMovies();
 
 export default function MovieDetailsPage() {
-  const [status, setStatus] = useState(Status.PENDING);
-  const [error, setError] = useState(null);
-  const [movieDetails, setMovieDetails] = useState(null);
+  const [status, setStatus] = useState<string>(Status.PENDING);
+  const [error, setError] = useState<AxiosError | null>(null);
+  const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
   const { movieId } = useParams();
 
   useEffect(() => {
@@ -36,7 +39,7 @@ export default function MovieDetailsPage() {
   }
 
   if (status === Status.REJECTED) {
-    return <p>Error fetching data: {error.message}</p>;
+    return <p>Error fetching data: {error?.message}</p>;
   }
 
   if (status === Status.RESOLVED) {
