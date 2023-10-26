@@ -1,4 +1,4 @@
-export type MovieByQuery = {
+export type Movie = {
   id: string;
   title: string;
 };

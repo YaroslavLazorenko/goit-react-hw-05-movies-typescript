@@ -4,13 +4,16 @@ import Loader from 'react-loader-spinner';
 import FetchMovies from '../../services/themoviedb-api';
 import { ROUTES, Status } from '../../consts';
 import Styles from './HomePage.module.css';
+import { AxiosError } from 'axios';
+
+import type { Movie } from 'types';
 
 const fetchMovies = new FetchMovies();
 
 export default function HomeView() {
-  const [status, setStatus] = useState(Status.PENDING);
-  const [error, setError] = useState(null);
-  const [trendingMovies, setTrendingMovies] = useState([]);
+  const [status, setStatus] = useState<string>(Status.PENDING);
+  const [error, setError] = useState<AxiosError | null>(null);
+  const [trendingMovies, setTrendingMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
     fetchMovies
@@ -34,7 +37,7 @@ export default function HomeView() {
   }
 
   if (status === Status.REJECTED) {
-    return <p>Error fetching data: {error.message}</p>;
+    return <p>Error fetching data: {error?.message}</p>;
   }
 
   if (status === Status.RESOLVED) {
