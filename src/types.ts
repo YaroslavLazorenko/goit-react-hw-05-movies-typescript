@@ -16,3 +16,9 @@ export type MovieDetails = {
   overview: string;
   genres: string;
 };
+
+export type CastType = {
+  profile: string | null | undefined;
+  name: string;
+  character: string;
+};

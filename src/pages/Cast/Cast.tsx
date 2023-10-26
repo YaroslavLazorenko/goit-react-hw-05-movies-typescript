@@ -4,15 +4,18 @@ import Loader from 'react-loader-spinner';
 import FetchMovies from '../../services/themoviedb-api';
 import { Status } from '../../consts';
 import Styles from './Cast.module.css';
+import { AxiosError } from 'axios';
+
+import type { CastType } from 'types';
 
 const fetchMovies = new FetchMovies();
 
 export default function Cast() {
-  const [status, setStatus] = useState(Status.PENDING);
-  const [error, setError] = useState(null);
-  const movieId = useOutletContext();
+  const [status, setStatus] = useState<string>(Status.PENDING);
+  const [error, setError] = useState<AxiosError | null>(null);
+  const movieId = useOutletContext<string>();
 
-  const [cast, setCast] = useState([]);
+  const [cast, setCast] = useState<CastType[]>([]);
   useEffect(() => {
     fetchMovies
       .getCast(movieId)
@@ -35,7 +38,7 @@ export default function Cast() {
   }
 
   if (status === Status.REJECTED) {
-    return <p>Error fetching data: {error.message}</p>;
+    return <p>Error fetching data: {error?.message}</p>;
   }
 
   if (status === Status.RESOLVED) {
