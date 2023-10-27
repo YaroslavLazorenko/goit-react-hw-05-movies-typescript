@@ -24,7 +24,7 @@ export default function MovieDetailsPage() {
         setMovieDetails(movieDetails);
         setStatus(Status.RESOLVED);
       })
-      .catch(error => {
+      .catch((error:AxiosError) => {
         setError(error);
         setStatus(Status.REJECTED);
       });
@@ -39,7 +39,7 @@ export default function MovieDetailsPage() {
   }
 
   if (status === Status.REJECTED) {
-    return <p>Error fetching data: {error?.message}</p>;
+    return <p>Error fetching data: {error?.message?? "Unknown error"}</p>;
   }
 
   if (status === Status.RESOLVED) {

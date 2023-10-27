@@ -23,7 +23,7 @@ export default function Reviews() {
         setReviews(reviews);
         setStatus(Status.RESOLVED);
       })
-      .catch(error => {
+      .catch((error: AxiosError) => {
         setError(error);
         setStatus(Status.REJECTED);
       });
@@ -38,7 +38,7 @@ export default function Reviews() {
   }
 
   if (status === Status.REJECTED) {
-    return <p>Error fetching data: {error?.message}</p>;
+    return <p>Error fetching data: {error?.message ?? 'Unknown error'}</p>;
   }
 
   if (status === Status.RESOLVED) {

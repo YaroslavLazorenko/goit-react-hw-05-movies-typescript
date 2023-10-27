@@ -38,7 +38,7 @@ export default function Cast() {
   }
 
   if (status === Status.REJECTED) {
-    return <p>Error fetching data: {error?.message}</p>;
+    return <p>Error fetching data: {error?.message?? "Unknown error"}</p>;
   }
 
   if (status === Status.RESOLVED) {
