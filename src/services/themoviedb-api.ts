@@ -1,6 +1,24 @@
 import axios from 'axios';
 
+import {
+  Movie,
+  IMovies,
+  MovieDetails,
+  IMovieDetails,
+  CastType,
+  ICast,
+  Review,
+  IReview,
+} from 'types';
+
 export default class FetchMovies {
+  KEY: string;
+  TRENDING_MOVIES_PARAMETERS: string;
+  MOVIE_DETAILS_PARAMETERS: string;
+  CAST_PARAMETERS: string;
+  REVIEWS_PARAMETERS: string;
+  SEARCH_PARAMETERS: string;
+
   constructor() {
     axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
     this.KEY = 'ec0d6416fe23d598a686f5996c6cceae';
@@ -11,19 +29,19 @@ export default class FetchMovies {
     this.SEARCH_PARAMETERS = 'search/movie';
   }
 
-  async getTrendingMovies() {
+  async getTrendingMovies(): Promise<Movie[]> {
     const parameters = `${this.TRENDING_MOVIES_PARAMETERS}?api_key=${this.KEY}`;
 
-    const response = await axios.get(parameters);
+    const response = await axios.get<IMovies>(parameters);
     return response.data.results.map(({ id, original_title }) => {
       return { id, title: original_title };
     });
   }
 
-  async getMovieDetails(movieId) {
+  async getMovieDetails(movieId: string): Promise<MovieDetails> {
     const parameters = `${this.MOVIE_DETAILS_PARAMETERS}/${movieId}?api_key=${this.KEY}`;
 
-    const response = await axios.get(parameters);
+    const response = await axios.get<IMovieDetails>(parameters);
     const { poster_path, original_title, release_date, vote_average, overview, genres } =
       response.data;
 
@@ -37,25 +55,25 @@ export default class FetchMovies {
     };
   }
 
-  getReleaseYear(releaseDate) {
+  getReleaseYear(releaseDate: string | null | undefined) {
     if (!releaseDate) return 'No information';
     return releaseDate.split('-')[0];
   }
 
-  getUserScore(voteAverage) {
+  getUserScore(voteAverage: string | null | undefined) {
     if (!voteAverage) return 'No information';
     return Math.round(Number(voteAverage) * 10) + '%';
   }
 
-  getGenres(genresArray) {
+  getGenres(genresArray: { name: string }[] | null | undefined) {
     if (!genresArray) return 'No information';
     return genresArray.map(genre => genre.name).join(', ');
   }
 
-  async getCast(movieId) {
+  async getCast(movieId: string): Promise<CastType[]> {
     const parameters = `${this.CAST_PARAMETERS}/${movieId}/credits?api_key=${this.KEY}`;
 
-    const response = await axios.get(parameters);
+    const response = await axios.get<ICast>(parameters);
     return response.data.cast.map(({ profile_path, name, character }) => {
       return {
         profile: profile_path,
@@ -65,10 +83,10 @@ export default class FetchMovies {
     });
   }
 
-  async getReviews(movieId) {
+  async getReviews(movieId: string): Promise<Review[]> {
     const parameters = `${this.REVIEWS_PARAMETERS}/${movieId}/reviews?api_key=${this.KEY}&language=en-US`;
 
-    const response = await axios.get(parameters);
+    const response = await axios.get<IReview>(parameters);
     return response.data.results.map(({ author, content }) => {
       return {
         author: author ?? 'No information',
@@ -77,10 +95,10 @@ export default class FetchMovies {
     });
   }
 
-  async getMoviesByQuery(searchQuery) {
+  async getMoviesByQuery(searchQuery: string): Promise<Movie[]> {
     const parameters = `${this.SEARCH_PARAMETERS}?api_key=${this.KEY}&query=${searchQuery}&include_adult=false`;
 
-    const response = await axios.get(parameters);
+    const response = await axios.get<IMovies>(parameters);
     return response.data.results.map(({ id, original_title }) => {
       return { id, title: original_title };
     });

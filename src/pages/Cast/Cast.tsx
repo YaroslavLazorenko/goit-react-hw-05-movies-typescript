@@ -23,7 +23,7 @@ export default function Cast() {
         setCast(cast);
         setStatus(Status.RESOLVED);
       })
-      .catch(error => {
+      .catch((error: AxiosError) => {
         setError(error);
         setStatus(Status.REJECTED);
       });

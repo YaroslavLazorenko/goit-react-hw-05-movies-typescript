@@ -19,7 +19,7 @@ export default function MovieDetailsPage() {
 
   useEffect(() => {
     fetchMovies
-      .getMovieDetails(movieId)
+      .getMovieDetails(movieId ?? '')
       .then(movieDetails => {
         setMovieDetails(movieDetails);
         setStatus(Status.RESOLVED);
